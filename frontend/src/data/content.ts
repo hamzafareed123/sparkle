@@ -28,3 +28,10 @@ export const faqs = [
   'Do I need to be home during the cleaning?',
   'What if I am not satisfied with the cleaning?',
 ]
+
+export const teamMembers = [
+  { name: 'Michael Chen', role: 'Operations Manager', image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800' },
+  { name: 'Sarah Jenkins', role: 'Head of Cleaning Staff', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800' },
+  { name: 'David Rodriguez', role: 'Quality Assurance', image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=800' },
+  { name: 'Emily Carter', role: 'Customer Success', image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=800' },
+]

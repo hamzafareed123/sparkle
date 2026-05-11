@@ -3,129 +3,130 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { X, ZoomIn } from 'lucide-react'
 import './GalleryPage.css'
 
-// High-quality Unsplash cleaning images data with varied aspect ratios for Pinterest-style layout
+// Verified Unsplash cleaning & home interior images
 const galleryImages = [
   {
     id: 1,
-    url: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&h=600&fit=crop',
-    category: 'residential',
-    title: 'Living Room Deep Clean',
-    description: 'Sparkling clean living space with fresh upholstery',
+    url: 'https://images.unsplash.com/photo-1563453392212-326f5e854473?w=800&q=80',
+    category: 'deep-clean',
+    title: 'Professional Cleaning Supplies',
+    description: 'Premium eco-friendly cleaning equipment',
     height: 'medium'
   },
   {
     id: 2,
-    url: 'https://images.unsplash.com/photo-1497366216548-375f7037fcf0?w=800&h=1200&fit=crop',
-    category: 'commercial',
-    title: 'Office Space Sanitization',
-    description: 'Professional office cleaning and disinfection',
-    height: 'tall'
-  },
-  {
-    id: 3,
-    url: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=600&fit=crop',
+    url: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=800&q=80',
     category: 'residential',
-    title: 'Kitchen Deep Clean',
-    description: 'Thorough kitchen cleaning and appliance sanitization',
-    height: 'medium'
-  },
-  {
-    id: 4,
-    url: 'https://images.unsplash.com/photo-1583847268964-44781a2d86b4?w=800&h=1000&fit=crop',
-    category: 'deep-clean',
     title: 'Bathroom Restoration',
     description: 'Complete bathroom deep cleaning and restoration',
     height: 'tall'
   },
   {
+    id: 3,
+    url: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800&q=80',
+    category: 'deep-clean',
+    title: 'Floor Cleaning Service',
+    description: 'Professional steam cleaning service',
+    height: 'short'
+  },
+  {
+    id: 4,
+    url: 'https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800&q=80',
+    category: 'residential',
+    title: 'Modern Living Room',
+    description: 'Immaculate living room refresh and detailing',
+    height: 'tall'
+  },
+  {
     id: 5,
-    url: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop',
-    category: 'commercial',
-    title: 'Retail Space Cleaning',
-    description: 'Commercial retail space maintenance cleaning',
+    url: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80',
+    category: 'residential',
+    title: 'Kitchen Deep Clean',
+    description: 'Thorough kitchen cleaning and sanitization',
     height: 'medium'
   },
   {
     id: 6,
-    url: 'https://images.unsplash.com/photo-1611892440772-3cc5b048b3c7?w=800&h=1200&fit=crop',
+    url: 'https://images.unsplash.com/photo-1497366216548-375f7037fcf0?w=800&q=80',
+    category: 'commercial',
+    title: 'Office Space Sanitization',
+    description: 'Professional office cleaning and disinfection',
+    height: 'short'
+  },
+  {
+    id: 7,
+    url: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=80',
     category: 'residential',
     title: 'Bedroom Refresh',
     description: 'Bedroom cleaning and linen refresh service',
     height: 'tall'
   },
   {
-    id: 7,
-    url: 'https://images.unsplash.com/photo-1549490349-8bd3b540262b?w=800&h=500&fit=crop',
-    category: 'deep-clean',
-    title: 'Window Cleaning Service',
-    description: 'Professional window and glass cleaning',
+    id: 8,
+    url: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80',
+    category: 'residential',
+    title: 'Living Room Deep Clean',
+    description: 'Sparkling clean living space',
+    height: 'medium'
+  },
+  {
+    id: 9,
+    url: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80',
+    category: 'residential',
+    title: 'Home Interior Polish',
+    description: 'Complete home cleaning and organization',
     height: 'short'
   },
   {
-    id: 8,
-    url: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=1000&fit=crop',
+    id: 10,
+    url: 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&q=80',
     category: 'commercial',
     title: 'Conference Room Setup',
     description: 'Corporate space cleaning and preparation',
     height: 'tall'
   },
   {
-    id: 9,
-    url: 'https://images.unsplash.com/photo-1583847268964-44781a2d86b4?w=800&h=600&fit=crop',
-    category: 'residential',
-    title: 'Dining Room Excellence',
-    description: 'Formal dining room cleaning and polishing',
-    height: 'medium'
-  },
-  {
-    id: 10,
-    url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=1200&fit=crop',
-    category: 'deep-clean',
-    title: 'Carpet Deep Cleaning',
-    description: 'Professional carpet steam cleaning service',
-    height: 'tall'
-  },
-  {
     id: 11,
-    url: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&h=500&fit=crop',
+    url: 'https://images.unsplash.com/photo-1628744448840-55bdb2497bd4?w=800&q=80',
     category: 'commercial',
-    title: 'Restaurant Sanitization',
-    description: 'Restaurant kitchen and dining area cleaning',
-    height: 'short'
+    title: 'Hotel Room Cleaning',
+    description: 'Luxury hotel room cleaning and preparation',
+    height: 'medium'
   },
   {
     id: 12,
-    url: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop',
-    category: 'residential',
-    title: 'Home Organization',
-    description: 'Complete home cleaning and organization service',
-    height: 'medium'
+    url: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=80',
+    category: 'deep-clean',
+    title: 'Bathroom Deep Clean',
+    description: 'Complete bathroom sanitization service',
+    height: 'tall'
   },
   {
     id: 13,
-    url: 'https://images.unsplash.com/photo-1556075798-4825eaf5b0be?w=800&h=400&fit=crop',
-    category: 'deep-clean',
-    title: 'Floor Polishing',
-    description: 'Professional floor cleaning and polishing service',
+    url: 'https://images.unsplash.com/photo-1556909172-54557c7e4fb7?w=800&q=80',
+    category: 'residential',
+    title: 'Spotless Kitchen',
+    description: 'Full kitchen deep clean and polish',
     height: 'short'
   },
   {
     id: 14,
-    url: 'https://images.unsplash.com/photo-1583847268964-44781a2d86b4?w=800&h=900&fit=crop',
-    category: 'commercial',
-    title: 'Hotel Room Cleaning',
-    description: 'Luxury hotel room cleaning and preparation',
-    height: 'tall'
+    url: 'https://images.unsplash.com/photo-1527515545081-5db817172677?w=800&q=80',
+    category: 'deep-clean',
+    title: 'Window Cleaning',
+    description: 'Professional window and glass cleaning',
+    height: 'medium'
   },
   {
     id: 15,
-    url: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=500&fit=crop',
+    url: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80',
     category: 'residential',
-    title: 'Garage Organization',
-    description: 'Complete garage cleaning and organization service',
-    height: 'short'
+    title: 'Dining Room Excellence',
+    description: 'Formal dining room cleaning and polishing',
+    height: 'tall'
   }
 ]
+
 
 const categories = [
   { id: 'all', label: 'All', value: 'all' },

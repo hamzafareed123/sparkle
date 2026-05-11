@@ -12,7 +12,6 @@ const topNavItems = [
   { label: 'Services', to: '/services', external: false },
   { label: 'Pricing', to: '/pricing', external: true },
   { label: 'Gallery', to: '/gallery', external: false },
-  { label: 'Team', to: '#', external: true },
 ]
 
 export function MainLayout() {
@@ -24,14 +23,14 @@ export function MainLayout() {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY
-      
+
       // Hide header when scrolling down, show when scrolling up
       if (currentScrollY > lastScrollY && currentScrollY > 100) {
         setIsHeaderCollapsed(true)
       } else {
         setIsHeaderCollapsed(false)
       }
-      
+
       setLastScrollY(currentScrollY)
     }
 
