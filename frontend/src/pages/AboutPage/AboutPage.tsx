@@ -2,6 +2,7 @@ import './AboutPage.css'
 import heroImg from '../../assets/Mask group.png'
 import { motion } from 'framer-motion'
 import { Target, Flower2, Leaf } from 'lucide-react'
+import { TeamSection } from '../../components/about/TeamSection/TeamSection'
 
 export function AboutPage() {
   const fadeInUp = {
@@ -153,6 +154,8 @@ export function AboutPage() {
           <button className="btn process-contact-btn">Contact Us</button>
         </div>
       </div>
+
+      <TeamSection />
 
       {/* Partners Section */}
       <motion.section 
