@@ -94,8 +94,4 @@ npm run dev
 
 ---
 
-##  Admin Login (after seed)
-```
-Email:    admin@sparkle.com
-Password: admin123
-```
+
