@@ -3,10 +3,16 @@ import { serviceServices } from './service.services'
 import { asyncHandler } from '../../utils/asyncHandler'
 import { STATUS_CODE } from '../../constants/statusCode'
 import { SUCCESS_MESSAGES } from '../../constants/successMessages'
+import { parseServiceBody } from '../../utils/parseServiceBody'
 
 export const serviceController = {
   getAll: asyncHandler(async (req: Request, res: Response) => {
-    const services = await serviceServices.getAll()
+    const services = await serviceServices.getAllPublic()
+    res.status(STATUS_CODE.OK).json({ services })
+  }),
+
+  getAllForAdmin: asyncHandler(async (req: Request, res: Response) => {
+    const services = await serviceServices.getAllAdmin()
     res.status(STATUS_CODE.OK).json({ services })
   }),
 
@@ -16,12 +22,14 @@ export const serviceController = {
   }),
 
   create: asyncHandler(async (req: Request, res: Response) => {
-    const service = await serviceServices.create(req.body)
+    const data = parseServiceBody(req)
+    const service = await serviceServices.create(data)
     res.status(STATUS_CODE.CREATED).json({ message: SUCCESS_MESSAGES.SERVICE_CREATED, service })
   }),
 
   update: asyncHandler(async (req: Request, res: Response) => {
-    const service = await serviceServices.update(req.params.id, req.body)
+    const data = parseServiceBody(req, true)
+    const service = await serviceServices.update(req.params.id, data)
     res.status(STATUS_CODE.OK).json({ message: SUCCESS_MESSAGES.SERVICE_UPDATED, service })
   }),
 

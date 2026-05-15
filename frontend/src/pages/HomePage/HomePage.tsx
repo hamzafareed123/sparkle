@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { services } from '../../data/content'
+import { servicesApi } from '../../api/services.api'
 import { HeroSection } from '../../components/home/HeroSection/HeroSection'
 import { HowItWorksSection } from '../../components/home/HowItWorksSection/HowItWorksSection'
 import { WhyChooseUsSection } from '../../components/home/WhyChooseUsSection/WhyChooseUsSection'
@@ -7,22 +7,20 @@ import { ServicesPreviewSection } from '../../components/home/ServicesPreviewSec
 import { TestimonialsSection } from '../../components/home/TestimonialsSection/TestimonialsSection'
 import { FaqSection } from '../../components/home/FaqSection/FaqSection'
 
-async function getFeaturedServices() {
-  return Promise.resolve(services.slice(0, 3))
-}
-
 export function HomePage() {
-  const { data: featured = [] } = useQuery({
-    queryKey: ['featured-services'],
-    queryFn: getFeaturedServices,
+  const { data: services = [], isLoading } = useQuery({
+    queryKey: ['services'],
+    queryFn: servicesApi.getAll,
   })
+
+  const featured = services.slice(0, 3)
 
   return (
     <div>
       <HeroSection />
       <HowItWorksSection />
       <WhyChooseUsSection />
-      <ServicesPreviewSection services={featured} />
+      <ServicesPreviewSection services={featured} isLoading={isLoading} />
       <TestimonialsSection />
       <FaqSection />
     </div>

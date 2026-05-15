@@ -6,9 +6,15 @@ import { SUCCESS_MESSAGES } from '../../constants/successMessages'
 
 export const paymentController = {
   createIntent: asyncHandler(async (req: Request, res: Response) => {
-    const { bookingId, amount } = req.body
-    const data = await paymentServices.createIntent(bookingId, amount)
+    const { bookingId, amount, paymentType } = req.body
+    const data = await paymentServices.createIntent(bookingId, amount, paymentType)
     res.status(STATUS_CODE.OK).json({ message: SUCCESS_MESSAGES.PAYMENT_INTENT_CREATED, ...data })
+  }),
+
+  confirmPayment: asyncHandler(async (req: Request, res: Response) => {
+    const { paymentIntentId } = req.body
+    const result = await paymentServices.confirmPayment(paymentIntentId)
+    res.status(STATUS_CODE.OK).json({ message: 'Payment confirmed', ...result })
   }),
 
   webhook: async (req: Request, res: Response) => {

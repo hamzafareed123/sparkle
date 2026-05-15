@@ -10,6 +10,7 @@ import { SignupPage } from '../pages/SignupPage/SignupPage'
 import { PrivacyPage } from '../pages/LegalPage/PrivacyPage'
 import { TermsPage } from '../pages/LegalPage/TermsPage'
 import { ForgotPasswordPage } from '../pages/ForgotPasswordPage/ForgotPasswordPage'
+import { BookingPage } from '../pages/BookingPage/BookingPage'
 
 const router = createBrowserRouter([
   /* Auth & standalone pages */
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
       { path: 'services', element: <ServicesPage /> },
       { path: 'pricing', element: <PricingPage /> },
       { path: 'gallery', element: <GalleryPage /> },
+      { path: 'book', element: <BookingPage /> },
       { path: '*', element: <Navigate to="/" replace /> },
     ],
   },

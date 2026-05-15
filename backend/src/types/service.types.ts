@@ -6,6 +6,7 @@ export interface IService extends Document {
   description: string
   price: number
   duration: string
+  image?: string
   isActive: boolean
   createdAt: Date
   updatedAt: Date
