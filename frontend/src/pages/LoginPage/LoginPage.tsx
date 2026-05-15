@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { authApi } from '../../api/auth.api'
+import { getErrorMessage } from '../../api/axios'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Mail, Lock, Eye, EyeOff, ArrowRight, AlertCircle, CheckCircle2 } from 'lucide-react'
 import './LoginPage.css'
@@ -32,6 +34,7 @@ interface FieldErrors {
 }
 
 export function LoginPage() {
+  const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -111,11 +114,18 @@ export function LoginPage() {
     }
 
     setIsLoading(true)
-    setTimeout(() => {
-      setIsLoading(false)
-      setSubmitSuccess(true)
-      // Handle login logic / redirect here
-    }, 1500)
+    authApi
+      .login(email, password)
+      .then(({ token, user }) => {
+        localStorage.setItem('sparkle_token', token)
+        localStorage.setItem('sparkle_user', JSON.stringify(user))
+        setSubmitSuccess(true)
+        setTimeout(() => navigate('/'), 1200)
+      })
+      .catch((err) => {
+        setFormError(getErrorMessage(err))
+      })
+      .finally(() => setIsLoading(false))
   }
 
   /* helper: field state class */

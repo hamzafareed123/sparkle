@@ -1,9 +1,18 @@
 import { Request, Response, NextFunction } from 'express'
+import multer from 'multer'
 import { CustomError } from '../utils/customError'
 import { STATUS_CODE } from '../constants/statusCode'
 
 export const errorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
   console.error('❌ Error:', err.message)
+
+  if (err instanceof multer.MulterError) {
+    return res.status(STATUS_CODE.BAD_REQUEST).json({ success: false, message: err.message })
+  }
+
+  if (err.message?.includes('Only image')) {
+    return res.status(STATUS_CODE.BAD_REQUEST).json({ success: false, message: err.message })
+  }
 
   if (err instanceof CustomError) {
     return res.status(err.statusCode).json({ success: false, message: err.message })

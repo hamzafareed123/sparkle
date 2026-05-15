@@ -1,4 +1,5 @@
 import { Check, Star, Sparkles } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import './HeroSection.css'
 import googleIcon from '../../../assets/google.png'
@@ -77,23 +78,16 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
         >
-          <motion.button 
-            className="hero-btn primary"
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 400 }}
-          >
-            {/* <Sparkles size={16} className="btn-icon" /> */}
-            Free Quote
-          </motion.button>
-          <motion.button 
-            className="hero-btn secondary"
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 400 }}
-          >
-            Services
-          </motion.button>
+          <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }}>
+            <Link to="/book" className="hero-btn primary">
+              Free Quote
+            </Link>
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }}>
+            <Link to="/services" className="hero-btn secondary">
+              Services
+            </Link>
+          </motion.div>
         </motion.div>
         
         <motion.div 

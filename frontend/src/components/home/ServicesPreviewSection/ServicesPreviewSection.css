@@ -1,3 +1,44 @@
+.service-card-placeholder {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(135deg, #dbeccf, #efefeb);
+}
+
+.service-card-skeleton {
+  min-height: 280px;
+  background: linear-gradient(90deg, #eee 25%, #f5f5f5 50%, #eee 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.service-card-price {
+  color: #ddbf61;
+  font-weight: 700;
+  margin: 0.25rem 0;
+}
+
+.service-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+  color: #3f704d;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.services-empty {
+  text-align: center;
+  color: #888;
+  padding: 2rem;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
 .service-grid {
   display: grid;
   gap: 1.5rem;

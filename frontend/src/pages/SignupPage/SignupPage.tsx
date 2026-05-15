@@ -1,5 +1,7 @@
 import { useState, useMemo, useCallback } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { authApi } from '../../api/auth.api'
+import { getErrorMessage } from '../../api/axios'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Mail, Lock, Eye, EyeOff, ArrowRight, User, AlertCircle, CheckCircle2 } from 'lucide-react'
 import './SignupPage.css'
@@ -50,6 +52,7 @@ interface FieldErrors {
 }
 
 export function SignupPage() {
+  const navigate = useNavigate()
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
@@ -172,10 +175,18 @@ export function SignupPage() {
     }
 
     setIsLoading(true)
-    setTimeout(() => {
-      setIsLoading(false)
-      setSubmitSuccess(true)
-    }, 1500)
+    authApi
+      .register(email, password)
+      .then(({ token, user }) => {
+        localStorage.setItem('sparkle_token', token)
+        localStorage.setItem('sparkle_user', JSON.stringify(user))
+        setSubmitSuccess(true)
+        setTimeout(() => navigate('/'), 1200)
+      })
+      .catch((err) => {
+        setFormError(getErrorMessage(err))
+      })
+      .finally(() => setIsLoading(false))
   }
 
   const fieldState = (field: keyof FieldErrors) => {

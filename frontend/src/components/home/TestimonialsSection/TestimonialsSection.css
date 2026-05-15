@@ -1,3 +1,28 @@
+.avatar-initial {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #3f704d;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.testimonials-loading,
+.testimonials-empty {
+  text-align: center;
+  padding: 2rem;
+  color: #888;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 /* Testimonials Section */
 .testimonials-section {
   display: block;

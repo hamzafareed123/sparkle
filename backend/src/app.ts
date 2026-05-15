@@ -1,5 +1,5 @@
 import express from 'express'
-import cors from 'cors'
+import cors, { type CorsOptions } from 'cors'
 import helmet from 'helmet'
 import morgan from 'morgan'
 import path from 'path'
@@ -23,11 +23,33 @@ const app = express()
 // Connect DB
 connectDB()
 
+const corsOptions: CorsOptions = {
+  origin(origin, callback) {
+    if (!origin) return callback(null, true)
+    if (env.clientUrls.includes(origin)) return callback(null, true)
+    if (env.nodeEnv === 'development' && /^https?:\/\/localhost(:\d+)?$/.test(origin)) {
+      return callback(null, true)
+    }
+    callback(new Error(`CORS blocked origin: ${origin}`))
+  },
+  credentials: true,
+}
+
+// CORS must run before helmet/rate-limit so preflight gets headers
+app.use(cors(corsOptions))
+app.options('*', cors(corsOptions))
+
 // Security
-app.use(helmet())
-app.use(cors({ origin: env.clientUrl, credentials: true }))
-app.use(globalLimiter)
-app.use(morgan('dev'))
+app.use(
+  helmet({
+    crossOriginResourcePolicy: env.nodeEnv === 'development' ? { policy: 'cross-origin' } : undefined,
+  }),
+)
+app.use((req, res, next) => {
+  if (req.method === 'OPTIONS') return next()
+  return globalLimiter(req, res, next)
+})
+app.use(morgan('tiny'))
 
 // Stripe webhook needs raw body — before json parser
 app.use('/api/payments/webhook', express.raw({ type: 'application/json' }))
@@ -63,6 +85,7 @@ app.use(errorHandler)
 app.listen(env.port, () => {
   console.log(`Server running on http://localhost:${env.port}`)
   console.log(`Environment: ${env.nodeEnv}`)
+  console.log(`CORS origins: ${env.clientUrls.join(', ')}`)
   console.log(`Mongo Express: http://localhost:8081`)
 })
 
