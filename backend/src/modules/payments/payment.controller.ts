@@ -17,6 +17,12 @@ export const paymentController = {
     res.status(STATUS_CODE.OK).json({ message: 'Payment confirmed', ...result })
   }),
 
+  createRemainingIntent: asyncHandler(async (req: Request, res: Response) => {
+    const { bookingId } = req.body
+    const data = await paymentServices.createRemainingIntent(bookingId)
+    res.status(STATUS_CODE.OK).json({ message: SUCCESS_MESSAGES.PAYMENT_INTENT_CREATED, ...data })
+  }),
+
   webhook: async (req: Request, res: Response) => {
     const sig = req.headers['stripe-signature'] as string
     try {

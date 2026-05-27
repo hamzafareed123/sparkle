@@ -109,15 +109,28 @@
   max-width: 620px;
 }
 
-.who-we-are-card button {
+.who-we-are-card button,
+.who-we-are-card .who-we-are-btn {
   margin-top: 1.3rem;
   border: 0;
-  background: linear-gradient(180deg, rgba(236, 212, 141, 0.9), rgba(214, 179, 86, 0.9));
+  background: linear-gradient(180deg, rgba(236, 212, 141, 0.95), rgba(214, 179, 86, 0.95));
   border-radius: 999px;
   min-width: 185px;
   height: 50px;
   font-weight: 600;
   box-shadow: 0 8px 18px rgba(102, 80, 23, 0.26);
+  color: #1f2f1c;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.2rem;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.who-we-are-card .who-we-are-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(102, 80, 23, 0.22);
 }
 
 .who-we-are-card img {
@@ -142,5 +155,25 @@
   }
   .who-tag {
     font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .works-steps {
+    gap: 1.2rem;
+  }
+  .works-step p {
+    font-size: 0.95rem;
+    max-width: 100%;
+  }
+  .who-we-are-card {
+    padding: 0.9rem;
+    gap: 1.2rem;
+  }
+  .who-we-are-card h3 {
+    font-size: 2rem;
+  }
+  .who-we-are-card p {
+    font-size: 1rem;
   }
 }

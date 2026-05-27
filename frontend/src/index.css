@@ -25,7 +25,10 @@
   
   font-family: "Rethink Sans", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: var(--text-primary);
-  background: var(--bg-primary);
+  /* Light cinematic background */
+  background: radial-gradient(800px 320px at 10% 10%, rgba(223,238,223,0.45), transparent),
+              linear-gradient(180deg, #fbfdfa 0%, #f6fbf7 40%, #f0f7f2 100%);
+  background-attachment: fixed;
 }
 
 * {
@@ -52,6 +55,17 @@ a:hover {
 .container {
   width: min(1520px, 98%);
   margin: 0 auto;
+}
+
+/* Subtle page vignette for cinematic depth */
+.site-shell::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(60% 40% at 50% 35%, rgba(255,255,255,0) 0%, rgba(15,40,26,0.03) 70%);
+  mix-blend-mode: multiply;
+  z-index: 0;
 }
 
 .section {

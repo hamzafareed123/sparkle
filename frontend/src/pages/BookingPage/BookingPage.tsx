@@ -1,5 +1,5 @@
-import { useState, useMemo } from 'react'
-import { useLocation, Link } from 'react-router-dom'
+import { useState, useMemo, useEffect } from 'react'
+import { useLocation, Link, useNavigate } from 'react-router-dom'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
 import { Calendar, Loader2, CheckCircle2, Leaf, Mail } from 'lucide-react'
@@ -12,10 +12,18 @@ import './BookingPage.css'
 
 type Step = 'form' | 'payment' | 'success'
 
+type PendingBooking = {
+  bookingId: string
+  email: string
+  remainingAmount: number
+  serviceType: string
+}
+
 const DEPOSIT_PERCENT = 0.5
 
 export function BookingPage() {
   const location = useLocation()
+  const navigate = useNavigate()
   const preselected = (location.state as { service?: string } | null)?.service ?? ''
 
   const { data: services = [] } = useQuery({
@@ -34,11 +42,16 @@ export function BookingPage() {
   const [specialNotes, setSpecialNotes] = useState('')
   const [error, setError] = useState('')
 
-  const [, setBookingId] = useState('')
+  const [bookingId, setBookingId] = useState('')
   const [clientSecret, setClientSecret] = useState('')
   const [paymentIntentId, setPaymentIntentId] = useState('')
   const [paidAmount, setPaidAmount] = useState(0)
   const [paymentComplete, setPaymentComplete] = useState(false)
+  const [emailSent, setEmailSent] = useState(true)
+  const [pendingBooking, setPendingBooking] = useState<PendingBooking | null>(null)
+  const [resumeError, setResumeError] = useState('')
+  const [isResuming, setIsResuming] = useState(false)
+  const [verifyingPayment, setVerifyingPayment] = useState(false)
 
   const selectedService = useMemo(
     () => services.find((s) => s.name === serviceType),
@@ -55,6 +68,7 @@ export function BookingPage() {
     onSuccess: async (result) => {
       const id = result.booking._id
       setBookingId(id)
+      setEmailSent(result.emailSent ?? true)
 
       if (depositAmount > 0 && import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY) {
         try {
@@ -65,7 +79,7 @@ export function BookingPage() {
           setStep('payment')
         } catch (err) {
           setError(getErrorMessage(err))
-          setStep('success')
+          return
         }
       } else {
         setStep('success')
@@ -90,7 +104,102 @@ export function BookingPage() {
       preferredDate,
       preferredTime,
       specialNotes: specialNotes || undefined,
+      price: selectedService?.price ?? 0,
     })
+  }
+
+  useEffect(() => {
+    const saved = window.localStorage.getItem('sparkle_pending_booking')
+    if (saved) {
+      try {
+        setPendingBooking(JSON.parse(saved))
+      } catch {
+        window.localStorage.removeItem('sparkle_pending_booking')
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    const query = new URLSearchParams(location.search)
+    const paymentIntent = query.get('payment_intent')
+
+    if (paymentIntent) {
+      const verifyPayment = async () => {
+        setVerifyingPayment(true)
+        setError('')
+        try {
+          const result = await paymentsApi.confirmPayment(paymentIntent)
+          
+          // Clear any pending bookings locally
+          window.localStorage.removeItem('sparkle_pending_booking')
+          setPendingBooking(null)
+          
+          // Populate the successful booking details from backend response
+          setCustomerName(result.customerName || 'Valued Customer')
+          setEmail(result.email || '')
+          setPaidAmount(result.amount)
+          setServiceType(result.serviceType || '')
+          setPaymentComplete(true)
+          setStep('success')
+          
+          // Clean up the URL parameters so a refresh doesn't trigger verification again
+          navigate('/book', { replace: true })
+        } catch (err) {
+          setError(getErrorMessage(err))
+        } finally {
+          setVerifyingPayment(false)
+        }
+      }
+      verifyPayment()
+    }
+  }, [location.search, navigate])
+
+  const savePendingBooking = (bookingId: string) => {
+    const payload: PendingBooking = {
+      bookingId,
+      email,
+      remainingAmount: depositAmount,
+      serviceType,
+    }
+    window.localStorage.setItem('sparkle_pending_booking', JSON.stringify(payload))
+    setPendingBooking(payload)
+  }
+
+  const clearPendingBooking = () => {
+    window.localStorage.removeItem('sparkle_pending_booking')
+    setPendingBooking(null)
+  }
+
+  const resumePendingPayment = async () => {
+    if (!pendingBooking) return
+    setResumeError('')
+    setIsResuming(true)
+    try {
+      const intent = await paymentsApi.createRemainingIntent(pendingBooking.bookingId)
+      setClientSecret(intent.clientSecret)
+      setPaymentIntentId(intent.paymentIntentId)
+      setPaidAmount(intent.amountDue)
+      setStep('payment')
+      clearPendingBooking()
+    } catch (err) {
+      setResumeError(getErrorMessage(err))
+    } finally {
+      setIsResuming(false)
+    }
+  }
+
+  if (verifyingPayment) {
+    return (
+      <div className="booking-page container section animate-fade-in">
+        <div className="booking-success" style={{ textAlign: 'center', padding: '3rem 2rem' }}>
+          <Loader2 className="spin" size={56} color="#3f704d" style={{ margin: '0 auto' }} />
+          <h1 style={{ marginTop: '1.5rem', color: 'var(--text-primary)' }}>Verifying Payment...</h1>
+          <p style={{ marginTop: '1rem', color: 'var(--text-secondary)' }}>
+            Please wait while we confirm your booking. Do not close or refresh this page.
+          </p>
+        </div>
+      </div>
+    )
   }
 
   if (step === 'success') {
@@ -109,7 +218,11 @@ export function BookingPage() {
           </p>
           <p className="booking-email-note">
             <Mail size={18} />
-            A confirmation email was sent to <strong>{email}</strong>
+            {emailSent ? (
+              <>A confirmation email was sent to <strong>{email}</strong></>
+            ) : (
+              <>Your booking is confirmed, but we could not send a confirmation email to <strong>{email}</strong>. Please contact support if needed.</>
+            )}
           </p>
           <Link to="/" className="booking-btn">
             Back to Home
@@ -140,11 +253,14 @@ export function BookingPage() {
             paymentIntentId={paymentIntentId}
             amount={paidAmount}
             paymentLabel="Deposit (50%)"
-            onSuccess={() => {
+              onSuccess={() => {
               setPaymentComplete(true)
               setStep('success')
             }}
-            onSkip={() => setStep('success')}
+            onSkip={() => {
+              savePendingBooking(bookingId)
+              setStep('success')
+            }}
           />
         </div>
       </div>
@@ -165,6 +281,18 @@ export function BookingPage() {
         <h1>Schedule Your Cleaning</h1>
         <p>Fill in the details below. A 50% deposit secures your appointment.</p>
       </motion.div>
+
+      {pendingBooking && (
+        <div className="booking-pending-banner">
+          <p>
+            You have a pending payment for <strong>{pendingBooking.serviceType}</strong>. Pay ${pendingBooking.remainingAmount.toFixed(2)} now to complete your booking.
+          </p>
+          <button type="button" className="booking-submit" onClick={resumePendingPayment} disabled={isResuming}>
+            {isResuming ? 'Preparing payment...' : 'Resume payment'}
+          </button>
+          {resumeError && <p className="booking-error">{resumeError}</p>}
+        </div>
+      )}
 
       <form className="booking-form container" onSubmit={handleSubmit}>
         <div className="booking-grid">

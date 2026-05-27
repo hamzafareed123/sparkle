@@ -14,8 +14,8 @@ export const env = {
     expiresIn: process.env.JWT_EXPIRES_IN || '7d',
   },
   stripe: {
-    secretKey: process.env.STRIPE_SECRET_KEY as string,
-    webhookSecret: process.env.STRIPE_WEBHOOK_SECRET as string,
+    secretKey: (process.env.STRIPE_SECRET_KEY as string || '').trim(),
+    webhookSecret: (process.env.STRIPE_WEBHOOK_SECRET as string || '').trim(),
   },
   email: {
     host: process.env.EMAIL_HOST as string,

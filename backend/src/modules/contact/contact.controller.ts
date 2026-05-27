@@ -6,8 +6,8 @@ import { SUCCESS_MESSAGES } from '../../constants/successMessages'
 
 export const contactController = {
   submit: asyncHandler(async (req: Request, res: Response) => {
-    const contact = await contactServices.submit(req.body)
-    res.status(STATUS_CODE.CREATED).json({ message: SUCCESS_MESSAGES.CONTACT_SUBMITTED, contact })
+    const result = await contactServices.submit(req.body)
+    res.status(STATUS_CODE.CREATED).json({ message: SUCCESS_MESSAGES.CONTACT_SUBMITTED, ...result })
   }),
 
   getAll: asyncHandler(async (req: Request, res: Response) => {

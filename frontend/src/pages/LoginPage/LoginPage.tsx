@@ -12,7 +12,7 @@ const fadeUp = {
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.1, duration: 0.6, ease: [0.4, 0, 0.2, 1] },
+    transition: { delay: i * 0.1, duration: 0.6 },
   }),
 }
 
@@ -21,7 +21,7 @@ const scaleIn = {
   visible: {
     opacity: 1,
     scale: 1,
-    transition: { duration: 0.7, ease: [0.4, 0, 0.2, 1] },
+    transition: { duration: 0.7 },
   },
 }
 
@@ -141,7 +141,7 @@ export function LoginPage() {
         className="login-hero"
         initial={{ x: -60, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+        transition={{ duration: 0.8 }}
       >
         <div className="login-floating-shapes">
           <span /><span /><span /><span /><span />
