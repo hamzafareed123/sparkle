@@ -1,0 +1,20 @@
+export declare const SUCCESS_MESSAGES: {
+    readonly LOGIN_SUCCESS: "Login successful";
+    readonly REGISTER_SUCCESS: "Registration successful";
+    readonly LOGOUT_SUCCESS: "Logged out successfully";
+    readonly BOOKING_CREATED: "Booking created successfully";
+    readonly BOOKING_UPDATED: "Booking updated successfully";
+    readonly BOOKING_DELETED: "Booking deleted successfully";
+    readonly BOOKING_STATUS_UPDATED: "Booking status updated successfully";
+    readonly CONTACT_SUBMITTED: "Your message has been received. We will get back to you soon";
+    readonly CONTACT_DELETED: "Contact deleted successfully";
+    readonly CONTACT_MARKED_READ: "Marked as read";
+    readonly SERVICE_CREATED: "Service created successfully";
+    readonly SERVICE_UPDATED: "Service updated successfully";
+    readonly SERVICE_DELETED: "Service deleted successfully";
+    readonly TESTIMONIAL_SUBMITTED: "Review submitted, pending approval";
+    readonly TESTIMONIAL_APPROVED: "Testimonial approved";
+    readonly TESTIMONIAL_DELETED: "Testimonial deleted";
+    readonly PAYMENT_INTENT_CREATED: "Payment intent created";
+    readonly REFUND_SUCCESS: "Refund processed successfully";
+};

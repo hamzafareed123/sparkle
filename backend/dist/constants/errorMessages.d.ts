@@ -1,0 +1,20 @@
+export declare const ERROR_MESSAGES: {
+    readonly INVALID_CREDENTIALS: "Invalid email or password";
+    readonly EMAIL_IN_USE: "Email already in use";
+    readonly NOT_AUTHORIZED: "Not authorized, no token provided";
+    readonly INVALID_TOKEN: "Invalid or expired token";
+    readonly USER_NOT_FOUND: "User not found";
+    readonly NO_PERMISSION: "You do not have permission to perform this action";
+    readonly BOOKING_NOT_FOUND: "Booking not found";
+    readonly BOOKING_CREATE_FAILED: "Failed to create booking";
+    readonly CONTACT_NOT_FOUND: "Contact inquiry not found";
+    readonly SERVICE_NOT_FOUND: "Service not found";
+    readonly SERVICE_SLUG_EXISTS: "A service with this slug already exists";
+    readonly TESTIMONIAL_NOT_FOUND: "Testimonial not found";
+    readonly PAYMENT_NOT_FOUND: "Payment not found";
+    readonly PAYMENT_INTENT_FAILED: "Failed to create payment intent";
+    readonly WEBHOOK_SIGNATURE_FAILED: "Webhook signature verification failed";
+    readonly INTERNAL_ERROR: "Internal server error";
+    readonly VALIDATION_ERROR: "Validation error";
+    readonly ROUTE_NOT_FOUND: "Route not found";
+};

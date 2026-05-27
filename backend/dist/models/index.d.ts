@@ -1,0 +1,6 @@
+export * from './user.model';
+export * from './booking.model';
+export * from './contact.model';
+export * from './service.model';
+export * from './testimonial.model';
+export * from './payment.model';
