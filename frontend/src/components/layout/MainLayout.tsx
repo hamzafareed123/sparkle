@@ -1,6 +1,6 @@
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Menu, MessageCircle, Phone, X } from 'lucide-react'
 import './MainLayout.css'
 import type { RootState } from '../../app/store'
@@ -10,36 +10,53 @@ import { Footer } from './Footer/Footer'
 const topNavItems = [
   { label: 'About', to: '/about', external: false },
   { label: 'Services', to: '/services', external: false },
-  { label: 'Pricing', to: '/pricing', external: true },
+  { label: 'Pricing', to: '/pricing', external: false },
   { label: 'Gallery', to: '/gallery', external: false },
 ]
 
 export function MainLayout() {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const location = useLocation()
   const mobileMenuOpen = useSelector((state: RootState) => state.ui.mobileMenuOpen)
   const [isHeaderCollapsed, setIsHeaderCollapsed] = useState(false)
-  const [lastScrollY, setLastScrollY] = useState(0)
+  const lastScrollYRef = useRef(0)
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY
 
-      // Hide header when scrolling down, show when scrolling up
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+      if (window.innerWidth <= 900) {
+        setIsHeaderCollapsed(false)
+        lastScrollYRef.current = currentScrollY
+        return
+      }
+
+      if (currentScrollY > lastScrollYRef.current && currentScrollY > 120) {
         setIsHeaderCollapsed(true)
       } else {
         setIsHeaderCollapsed(false)
       }
 
-      setLastScrollY(currentScrollY)
+      lastScrollYRef.current = currentScrollY
     }
 
+    handleScroll()
     window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [lastScrollY])
+    window.addEventListener('resize', handleScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', handleScroll)
+    }
+  }, [])
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+  }, [location.pathname])
 
   return (
     <div className="site-shell">
+      <a href="#main-content" className="skip-link">Skip to content</a>
       {/* Cinematic Floating Glass Header */}
       <header className={`site-header ${isHeaderCollapsed ? 'collapsed' : ''} transition-all duration-500 ease-in-out`}>
         <div className="header-glass nav-row transition-all duration-500 ease-in-out">
@@ -75,7 +92,14 @@ export function MainLayout() {
             <a href="tel:+74951519090" className="phone-link transition-all duration-500 ease-in-out">
               <Phone size={18} strokeWidth={2.5} className="transition-all duration-300 ease-in-out" /> +7 (495) 151-9090
             </a>
-            <button className="action-btn transition-all duration-500 ease-in-out" aria-label="Start Chat">
+            <button
+              className="action-btn transition-all duration-500 ease-in-out"
+              aria-label="Start Chat"
+              onClick={() => {
+                dispatch(closeMobileMenu())
+                navigate('/book')
+              }}
+            >
               <MessageCircle size={18} strokeWidth={2} className="transition-all duration-300 ease-in-out" />
             </button>
           </div>
@@ -117,13 +141,21 @@ export function MainLayout() {
           <a href="tel:+74951519090" className="phone-link">
             <Phone size={24} strokeWidth={2.5} /> +7 (495) 151-9090
           </a>
-          <button className="action-btn" style={{ width: 60, height: 60 }} aria-label="Start Chat">
+          <button
+            className="action-btn"
+            style={{ width: 60, height: 60 }}
+            aria-label="Start Chat"
+            onClick={() => {
+              dispatch(closeMobileMenu())
+              navigate('/book')
+            }}
+          >
             <MessageCircle size={24} strokeWidth={2} />
           </button>
         </div>
       </div>
 
-      <main className="page-content">
+      <main id="main-content" className="page-content">
         <Outlet />
       </main>
       <Footer />

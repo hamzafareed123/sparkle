@@ -1,4 +1,5 @@
 import './AboutPage.css'
+import { Link } from 'react-router-dom'
 import heroImg from '../../assets/Mask group.png'
 import { motion } from 'framer-motion'
 import { Target, Flower2, Leaf } from 'lucide-react'
@@ -7,7 +8,7 @@ import { TeamSection } from '../../components/about/TeamSection/TeamSection'
 export function AboutPage() {
   const fadeInUp = {
     hidden: { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
   }
 
   const staggerContainer = {
@@ -81,7 +82,7 @@ export function AboutPage() {
              <Target size={28} color="#5ea83c" />
            </div>
            <p>We launched Paleovalley with the belief that every ingredient is an opportunity to improve your health.</p>
-           <span className="learn-more">Learn more</span>
+           <Link to="/book" className="learn-more">Learn more</Link>
         </motion.div>
         <motion.div className="feature-card" variants={fadeInUp}>
            <Leaf className="card-leaf" color="#5ea83c" fill="#8ed16d" strokeWidth={1} />
@@ -90,7 +91,7 @@ export function AboutPage() {
              <Target size={28} color="#5ea83c" />
            </div>
            <p>Our mission is to create products that always prioritize health over profit.</p>
-           <span className="learn-more">Learn more</span>
+           <Link to="/book" className="learn-more">Learn more</Link>
         </motion.div>
         <motion.div className="feature-card" variants={fadeInUp}>
            <Leaf className="card-leaf" color="#5ea83c" fill="#8ed16d" strokeWidth={1} />
@@ -99,7 +100,7 @@ export function AboutPage() {
              <Flower2 size={28} color="#5ea83c" />
            </div>
            <p>Many products claimed that their products are 100% pure, but our products are 100% Original.</p>
-           <span className="learn-more">Learn more</span>
+           <Link to="/book" className="learn-more">Learn more</Link>
         </motion.div>
       </motion.div>
 
@@ -116,7 +117,7 @@ export function AboutPage() {
           >
             <h2>We have best team<br />and best process</h2>
             <p>We work passionately to ensure your environment is healthy. High thoughts and services exceeding challenges away everyday joy.</p>
-            <button className="btn process-btn">Get Started</button>
+            <Link to="/book" className="btn process-btn">Get Started</Link>
           </motion.div>
 
           <motion.div 
@@ -151,7 +152,7 @@ export function AboutPage() {
                 <p>From the first job in he give enriching. They ego and draw mistakes. Improving end client instantly.</p>
              </motion.div>
           </motion.div>
-          <button className="btn process-contact-btn">Contact Us</button>
+          <Link to="/book" className="btn process-contact-btn">Contact Us</Link>
         </div>
       </div>
 

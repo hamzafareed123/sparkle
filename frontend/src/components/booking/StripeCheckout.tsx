@@ -38,6 +38,9 @@ function CheckoutForm({
     try {
       const { error: stripeError, paymentIntent } = await stripe.confirmPayment({
         elements,
+        confirmParams: {
+          return_url: `${window.location.origin}/book`,
+        },
         redirect: 'if_required',
       })
 

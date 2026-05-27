@@ -7,9 +7,14 @@ import { ERROR_MESSAGES } from '../../constants/errorMessages'
 export const contactServices = {
   submit: async (data: { name: string; email: string; phone?: string; message: string }) => {
     const contact = await contactRepositories.create(data)
-    try { await sendContactNotification(data.name, data.email, data.phone, data.message) }
-    catch (e) { console.warn('Email failed:', e) }
-    return contact
+    let emailSent = true
+    try {
+      await sendContactNotification(data.name, data.email, data.phone, data.message)
+    } catch (e) {
+      console.warn('Email failed:', e)
+      emailSent = false
+    }
+    return { contact, emailSent }
   },
 
   getAll: () => contactRepositories.findAll(),

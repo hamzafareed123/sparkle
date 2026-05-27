@@ -9,6 +9,7 @@ export const createBookingSchema = z.object({
   preferredDate: z.string().refine((d) => !isNaN(Date.parse(d)), 'Invalid date'),
   preferredTime: z.string().min(1, 'Preferred time is required'),
   specialNotes: z.string().optional(),
+  price: z.number().positive('Service price is required'),
 })
 
 export const updateStatusSchema = z.object({

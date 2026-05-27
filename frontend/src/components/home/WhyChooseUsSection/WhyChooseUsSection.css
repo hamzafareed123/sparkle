@@ -191,3 +191,22 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 640px) {
+  .choose-card {
+    padding: 1rem;
+  }
+  .choose-image {
+    width: 150px;
+    height: 150px;
+  }
+  .choose-copy p {
+    font-size: 0.95rem;
+  }
+  .stats-strip {
+    padding: 0.8rem;
+  }
+  .stats-item h3 {
+    font-size: 2rem;
+  }
+}

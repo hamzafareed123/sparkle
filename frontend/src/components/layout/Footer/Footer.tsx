@@ -1,27 +1,43 @@
+import { Link } from 'react-router-dom'
 import "./Footer.css";
 import { motion } from "framer-motion";
 import leafImage from "../../../assets/leaf.png"
 import { Globe, Share2, MessageCircle, Users, Mail, Phone, MapPin, Heart, Sparkles } from "lucide-react";
 
 const socialLinks = [
-  { icon: Globe, label: "Website", href: "#" },
-  { icon: Share2, label: "Share", href: "#" },
-  { icon: MessageCircle, label: "Chat", href: "#" },
-  { icon: Users, label: "Community", href: "#" }
+  { icon: Globe, label: "Website", href: "/" },
+  { icon: Share2, label: "Share", href: "/about" },
+  { icon: MessageCircle, label: "Chat", href: "mailto:hello@freshspaces.com" },
+  { icon: Users, label: "Community", href: "/about" }
 ];
 
 const footerSections = [
   {
     title: "Product",
-    links: ["Features", "Pricing", "Gallery", "Services"]
+    links: [
+      { label: 'Features', to: '/services' },
+      { label: 'Pricing', to: '/pricing' },
+      { label: 'Gallery', to: '/gallery' },
+      { label: 'Services', to: '/services' }
+    ]
   },
   {
     title: "Company",
-    links: ["About", "Terms", "Privacy", "Legal"]
+    links: [
+      { label: 'About', to: '/about' },
+      { label: 'Terms', to: '/terms' },
+      { label: 'Privacy', to: '/privacy' },
+      { label: 'Legal', to: '/terms' }
+    ]
   },
   {
     title: "Support",
-    links: ["Feedback", "Help Center", "Contact", "FAQ"]
+    links: [
+      { label: 'Feedback', to: 'mailto:hello@freshspaces.com' },
+      { label: 'Help Center', to: '/about' },
+      { label: 'Contact', to: 'mailto:hello@freshspaces.com' },
+      { label: 'FAQ', to: '/about' }
+    ]
   }
 ];
 
@@ -180,10 +196,8 @@ export function Footer() {
                 {section.title}
               </motion.h4>
               {section.links.map((link, linkIndex) => (
-                <motion.a
-                  key={link}
-                  href="#"
-                  className="footer-link"
+                <motion.div
+                  key={link.label}
                   initial={{ opacity: 0, x: -10 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{
@@ -191,14 +205,27 @@ export function Footer() {
                     delay: 0.6 + sectionIndex * 0.1 + linkIndex * 0.05
                   }}
                   viewport={{ once: true }}
-                  whileHover={{
-                    x: 8,
-                    color: "var(--primary-color)"
-                  }}
-                  whileTap={{ scale: 0.95 }}
                 >
-                  {link}
-                </motion.a>
+                  {link.to.startsWith('mailto:') ? (
+                    <motion.a
+                      href={link.to}
+                      className="footer-link"
+                      whileHover={{ x: 8, color: 'var(--primary-color)' }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      {link.label}
+                    </motion.a>
+                  ) : (
+                    <motion.div
+                      whileHover={{ x: 8, color: 'var(--primary-color)' }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Link to={link.to} className="footer-link">
+                        {link.label}
+                      </Link>
+                    </motion.div>
+                  )}
+                </motion.div>
               ))}
             </motion.div>
           ))}
@@ -230,14 +257,16 @@ export function Footer() {
 
         {/* Additional bottom links */}
         <div className="bottom-links">
-          <motion.a
-            href="#"
+          <motion.button
+            type="button"
+            className="footer-link footer-top-button"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             whileHover={{ y: -2 }}
             whileTap={{ scale: 0.95 }}
           >
             <Sparkles size={14} />
             Back to top
-          </motion.a>
+          </motion.button>
         </div>
       </motion.div>
     </motion.footer>

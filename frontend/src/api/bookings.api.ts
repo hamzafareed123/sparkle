@@ -5,7 +5,7 @@ import type { BookingInput } from '../types'
 export const bookingsApi = {
   create: async (input: BookingInput) => {
     const { data } = await apiClient.post('/bookings', input)
-    const result = unwrap<{ message: string; booking: { _id: string } }>(data)
+    const result = unwrap<{ message: string; booking: { _id: string }; emailSent: boolean }>(data)
     return result
   },
 }

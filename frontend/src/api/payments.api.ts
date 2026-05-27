@@ -21,7 +21,15 @@ export const paymentsApi = {
       bookingId: string
       paymentStatus: string
       amount: number
+      customerName?: string
+      email?: string
+      serviceType?: string
       alreadyProcessed?: boolean
     }>(data)
+  },
+
+  createRemainingIntent: async (bookingId: string) => {
+    const { data } = await apiClient.post('/payments/remaining-intent', { bookingId })
+    return unwrap<{ clientSecret: string; paymentIntentId: string; amountDue: number }>(data)
   },
 }

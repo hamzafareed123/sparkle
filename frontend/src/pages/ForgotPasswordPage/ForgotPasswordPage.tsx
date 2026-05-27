@@ -194,7 +194,7 @@ export function ForgotPasswordPage() {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+                transition={{ duration: 0.35 }}
               >
                 <div className="forgot-header">
                   <div className="forgot-icon">🔑</div>
@@ -277,7 +277,7 @@ export function ForgotPasswordPage() {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+                transition={{ duration: 0.35 }}
               >
                 <div className="forgot-header">
                   <div className="forgot-icon">📩</div>
@@ -356,7 +356,7 @@ export function ForgotPasswordPage() {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+                transition={{ duration: 0.35 }}
               >
                 <div className="forgot-header">
                   <div className="forgot-icon">{submitSuccess ? '🎉' : '🔐'}</div>

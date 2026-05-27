@@ -12,6 +12,7 @@ export interface IBooking extends Document {
   status: 'PENDING' | 'CONFIRMED' | 'COMPLETED' | 'CANCELLED'
   paymentStatus: 'UNPAID' | 'DEPOSIT_PAID' | 'FULLY_PAID' | 'REFUNDED'
   amountPaid?: number
+  price: number
   payment?: Types.ObjectId
   createdAt: Date
   updatedAt: Date

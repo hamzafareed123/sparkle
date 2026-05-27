@@ -136,14 +136,14 @@ export function HeroSection() {
         whileHover={{ y: -5, scale: 1.05 }}
       >
         <img className="google-logo" src={googleIcon} alt="Google" />
-        <motion.p 
+        <motion.div 
           className="stars"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 1.6 }}
         >
           {[...Array(5)].map((_, i) => (
-            <motion.div
+            <motion.span
               key={i}
               style={{ display: 'inline-block' }}
               initial={{ opacity: 0, scale: 0, rotate: -180 }}
@@ -156,9 +156,9 @@ export function HeroSection() {
               }}
             >
               <Star size={14} fill="currentColor" />
-            </motion.div>
+            </motion.span>
           ))}
-        </motion.p>
+        </motion.div>
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

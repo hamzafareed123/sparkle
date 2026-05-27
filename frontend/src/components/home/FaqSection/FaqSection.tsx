@@ -79,7 +79,11 @@ export function FaqSection({ hideNewsletter = false }: { hideNewsletter?: boolea
                 <div className="faq-contact-success">
                   <CheckCircle2 size={32} color="#3f704d" />
                   <h3>Message sent!</h3>
-                  <p>We will get back to you shortly.</p>
+                  <p>
+                    {(contactMutation.data?.emailSent ?? true)
+                      ? 'We will get back to you shortly.'
+                      : 'Your request was received, but notification email could not be delivered. We will still review it.'}
+                  </p>
                 </div>
               ) : showForm ? (
                 <form onSubmit={handleContactSubmit} className="faq-contact-form">

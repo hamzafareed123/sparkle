@@ -2,6 +2,31 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Accessibility: skip link */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.skip-link:focus,
+.skip-link:active {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  width: auto;
+  height: auto;
+  padding: 0.6rem 0.9rem;
+  background: var(--primary-color);
+  color: #fff;
+  border-radius: 6px;
+  z-index: 9999;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
 }
 
 /* Floating Cinematic Header */
@@ -10,17 +35,17 @@
   top: 1.25rem;
   left: 0;
   right: 0;
-  z-index: 50;
+  z-index: 60;
   display: flex;
   justify-content: center;
-  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94), top 0.45s ease;
   transform: translateY(0);
   will-change: transform, top;
 }
 
 /* Collapsed Header State */
 .site-header.collapsed {
-  top: 2rem;
+  transform: translateY(-120%);
 }
 
 .site-header.collapsed .header-glass {
@@ -36,11 +61,12 @@
 }
 
 .header-glass {
-  background: rgba(255, 255, 255, 0.75);
+  pointer-events: all;
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(63, 112, 77, 0.18);
+  box-shadow: 0 18px 40px rgba(63, 112, 77, 0.16);
   border-radius: 999px;
   width: min(1520px, 96%);
   padding: 0 1.5rem;
@@ -64,15 +90,16 @@
 }
 
 .brand-mark {
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: #f1edda;
+  background: linear-gradient(135deg,#dbeccf,#d4a944);
   font-size: 1.1rem;
-  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: all 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   will-change: opacity, transform;
+  box-shadow: 0 8px 30px rgba(11,34,22,0.55);
 }
 
 .site-header.collapsed .brand-mark {
@@ -99,10 +126,10 @@
 .brand-copy span {
   display: block;
   font-size: 0.65rem;
-  color: #777;
+  color: #bfc9c1;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-weight: 600;
+  letter-spacing: 0.06em;
+  font-weight: 700;
   transition: all 0.3s ease;
 }
 
@@ -110,7 +137,8 @@
   margin: 0;
   font-size: 1.05rem;
   font-weight: 800;
-  color: #222;
+  color: #eaf6ef;
+  text-shadow: 0 2px 8px rgba(6,18,12,0.6);
   transition: all 0.3s ease;
 }
 
@@ -124,10 +152,11 @@
   gap: 2.5rem;
   font-size: 0.95rem;
   font-weight: 600;
+  color: #dbeccf;
 }
 
 .main-nav a {
-  color: #444;
+  color: #2d5a3a;
   transition: color 0.2s ease;
   position: relative;
 }
@@ -228,9 +257,9 @@
 .mobile-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(240, 245, 240, 0.95);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  background: linear-gradient(180deg, rgba(4,8,6,0.9), rgba(8,12,10,0.95));
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   z-index: 90;
   display: flex;
   flex-direction: column;

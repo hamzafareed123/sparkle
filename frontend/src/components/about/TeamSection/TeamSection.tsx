@@ -1,4 +1,3 @@
-import React from 'react'
 import './TeamSection.css'
 import { motion } from 'framer-motion'
 import { teamMembers } from '../../../data/content'
@@ -48,9 +47,9 @@ export function TeamSection() {
             <div className="team-image-wrapper">
               <img src={member.image} alt={member.name} className="team-image" />
               <div className="team-social-overlay">
-                <a href="#" className="social-icon" aria-label="Globe"><Globe size={20} /></a>
-                <a href="#" className="social-icon" aria-label="Phone"><Phone size={20} /></a>
-                <a href="#" className="social-icon" aria-label="Email"><Mail size={20} /></a>
+                <a href="/" className="social-icon" aria-label="Website"><Globe size={20} /></a>
+                <a href="tel:+74951519090" className="social-icon" aria-label="Phone"><Phone size={20} /></a>
+                <a href="mailto:hello@freshspaces.com" className="social-icon" aria-label="Email"><Mail size={20} /></a>
               </div>
             </div>
             <div className="team-info">

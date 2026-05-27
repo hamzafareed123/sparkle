@@ -9,6 +9,7 @@ import { PAGINATION } from "../../config/config";
 export const bookingServices = {
   create: async (data: ICreateBooking) => {
     const booking = await bookingRepositories.create(data);
+    let emailSent = true
     try {
       await sendBookingConfirmation(
         booking.email,
@@ -20,8 +21,9 @@ export const bookingServices = {
       );
     } catch (e) {
       console.warn("Email failed:", e);
+      emailSent = false
     }
-    return booking;
+    return { booking, emailSent };
   },
 
   getAll: async (

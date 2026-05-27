@@ -34,6 +34,7 @@ export interface BookingInput {
   preferredDate: string
   preferredTime: string
   specialNotes?: string
+  price: number
 }
 
 export interface ContactInput {

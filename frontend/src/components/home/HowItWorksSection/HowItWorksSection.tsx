@@ -1,4 +1,5 @@
 import { CalendarCheck2, Leaf, Search, Sparkles } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import basketImage from '../../../assets/basket.png'
 import './HowItWorksSection.css'
@@ -134,7 +135,7 @@ export function HowItWorksSection() {
               by connecting you with reliable, professional cleaners who care about your
               home as much as you do.
             </motion.p>
-            <motion.button
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 1.8 }}
@@ -142,8 +143,8 @@ export function HowItWorksSection() {
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              Learn More
-            </motion.button>
+              <Link to="/about" className="who-we-are-btn">Learn More</Link>
+            </motion.div>
           </div>
           <motion.img 
             src={basketImage} 

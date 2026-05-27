@@ -6,10 +6,8 @@ import { SUCCESS_MESSAGES } from "../../constants/successMessages";
 
 export const bookingController = {
   create: asyncHandler(async (req: Request, res: Response) => {
-    const booking = await bookingServices.create(req.body);
-    res
-      .status(STATUS_CODE.CREATED)
-      .json({ message: SUCCESS_MESSAGES.BOOKING_CREATED, booking });
+    const result = await bookingServices.create(req.body);
+    res.status(STATUS_CODE.CREATED).json({ message: SUCCESS_MESSAGES.BOOKING_CREATED, ...result });
   }),
 
   getAll: asyncHandler(async (req: Request, res: Response) => {
